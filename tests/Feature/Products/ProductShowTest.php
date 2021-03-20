@@ -12,7 +12,7 @@ class ProductShowTest extends TestCase {
         $this->json('GET', 'api/products/nothing')->assertStatus(404);
     }
 
-    public function test_it_shows_the_correct_product() {
+    public function test_it_shows_a_product() {
         $product = factory(Product::class)->create();
         
         $this->json('GET', "api/products/{$product->slug}")->assertJsonFragment([

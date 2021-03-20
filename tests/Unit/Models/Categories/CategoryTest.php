@@ -9,12 +9,14 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase {
+    
     public function test_it_many_children() {
         $category = factory(Category::class)->create();
 
         $category->children()->save(
             factory(Category::class)->create()
         );
+
         $this->assertInstanceOf(Category::class, $category->children->first());
     }
 
@@ -27,7 +29,7 @@ class CategoryTest extends TestCase {
         $this->assertEquals(1, Category::parents()->count());
     }
 
-    public function test_it_is_orderable_by_a_numbered_order(){
+    public function test_it_is_orderable_by_a_numbered_order() {
         $category = factory(Category::class)->create([
             'order' => 2
         ]);
@@ -35,17 +37,15 @@ class CategoryTest extends TestCase {
         $anotherCategory = factory(Category::class)->create([
             'order' => 1
         ]);
-
         $this->assertEquals($anotherCategory->name, Category::ordered()->first()->name);
     }
 
-    // public function test_it_has_many_products() {
-    //     $category = factory(Category::class)->create();
+    public function test_it_has_many_products() {
+        $category = factory(Category::class)->create();
 
-    //     $category->products()->save(
-    //         factory(Product::class)->create()
-    //     );
-
-    //     $this->assertInstanceOf(Product::class, $category->products->first());
-    // }
+        $category->products()->save(
+            factory(Product::class)->create()
+        );
+        $this->assertInstanceOf(Product::class, $category->products->first());
+    }
 }
