@@ -6,6 +6,7 @@ use App\Cart\Money;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use App\Models\ProductVariationType;
+use App\Models\Stock;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -30,7 +31,6 @@ class ProductVariationTest extends TestCase {
         $variation = factory(ProductVariation::class)->create([
             'price' => 1000
         ]);
-
         $this->assertEquals($variation->formattedPrice, '10,00 €');
     }
 
@@ -43,7 +43,6 @@ class ProductVariationTest extends TestCase {
             'price' => null,
             'product_id' => $product->id
         ]);
-
         $this->assertEquals($product->price->amount(), $variation->price->amount());
     }
 
@@ -51,12 +50,19 @@ class ProductVariationTest extends TestCase {
         $product = factory(Product::class)->create([
             'price' => 1000
         ]);
-
+        
         $variation = factory(ProductVariation::class)->create([
             'price' => 2000,
             'product_id' => $product->id
         ]);
-
         $this->assertTrue($variation->priceVaries());
+    }
+
+    public function test_it_has_many_stocks() {
+        $variation = factory(ProductVariation::class)->create();
+        $variation->stocks()->save(
+            factory(Stock::class)->make()
+        );
+        $this->assertInstanceOf(Stock::class, $variation->stocks->first());
     }
 }
