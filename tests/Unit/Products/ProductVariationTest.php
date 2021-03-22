@@ -122,4 +122,20 @@ class ProductVariationTest extends TestCase {
 
         $this->assertEquals($variation->stockCount(), 10);
     }
+
+    public function test_it_can_get_the_stock_count() {
+        $product = factory(Product::class)->create();
+
+        $product->variations()->save(
+            $variation = factory(ProductVariation::class)->create()
+        );
+
+        $variation->stocks()->save(
+            factory(Stock::class)->make([
+                'quantity' => $quantiy = 5
+            ])
+        );
+
+        $this->assertEquals($variation->stockCount(), $quantiy);
+    }
 }
