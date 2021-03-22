@@ -17,12 +17,19 @@ class ProductVariation extends Model {
         if ($value === null) {
             return $this->product->price;
         }
-        
         return new Money($value);
     }
 
     public function priceVaries() {
         return $this->price->amount() !== $this->product->price->amount();
+    }
+
+    public function inStock() {
+        return $this->stockCount() > 0;
+    }
+
+    public function stockCount() {
+        return $this->stock->sum('pivot.stock');
     }
 
     public function type() {
@@ -35,5 +42,15 @@ class ProductVariation extends Model {
 
     public function stocks() {
         return $this->hasMany(Stock::class);
+    }
+    
+    public function stock() {
+        return $this->belongsToMany(
+            ProductVariation::class, 'product_variation_stock_view'
+        )
+        ->withPivot([
+            'stock',
+            'in_stock'
+        ]);
     }
 }
