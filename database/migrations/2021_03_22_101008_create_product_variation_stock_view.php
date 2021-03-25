@@ -5,15 +5,13 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class CreateProductVariationStockView extends Migration
-{
+class CreateProductVariationStockView extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         DB::statement("
             CREATE VIEW product_variation_stock_view AS
             SELECT
@@ -48,8 +46,7 @@ class CreateProductVariationStockView extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         DB::statement("DROP VIEW IF EXISTS product_variation_stock_view");
     }
 }
