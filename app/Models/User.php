@@ -30,6 +30,14 @@ class User extends Authenticatable implements JWTSubject {
         'remember_token',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function($user) {
+            $user->password = bcrypt($user->password);
+        });
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -46,6 +54,9 @@ class User extends Authenticatable implements JWTSubject {
         return $this->id;
     }
 
+    /**
+     * @return [type] [description]
+     */
     public function getJWTCustomClaims() {
         return [];
     }

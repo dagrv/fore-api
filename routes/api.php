@@ -11,5 +11,5 @@ Route::resource('products', 'Products\ProductController');
 
 // -- User Register -- 
 Route::group(['prefix' => 'auth'], function(){
-    Route::post('register', 'Auth\RegisterController', '__invoke');    
+    Route::post('register', 'Auth\RegisterController@action');    
 });
