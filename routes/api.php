@@ -1,22 +1,25 @@
 <?php
 
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
-// -- Categories -- 
+// Categories
 Route::resource('categories', 'Categories\CategoryController');
 
-// -- Products -- 
+// Products
 Route::resource('products', 'Products\ProductController');
 
-// -- User Register -- 
+// Address
+Route::resource('addresses', 'Addresses\AddressController');
+
+// User Registration
 Route::group(['prefix' => 'auth'], function() {
     Route::post('register', 'Auth\RegisterController@action');
     Route::post('login', 'Auth\LoginController@action');
+    // ALTERNAT' : Route::post('login', [ 'as' => 'login', 'uses' => 'Auth\LoginController@action']);
     Route::get('me', 'Auth\MeController@action');
 });
 
-// -- Cart --
+// Cart
 Route::resource('cart', 'Cart\CartController', [
     'parameters' => [
         'cart' => 'productVariation'
