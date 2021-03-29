@@ -20,9 +20,9 @@ class AddressController extends Controller {
     }
 
     public function store(AddressStoreRequest $request) {
-        $address = Address::make($request->only(
-            ['name', 'address_1', 'city', 'postal_code', 'country_id', 'default']
-        ));
+        $address = Address::make($request->only([
+            'name', 'address_1', 'city', 'postal_code', 'country_id', 'default'
+        ]));
 
         $request->user()->addresses()->save($address);
 

@@ -11,6 +11,9 @@ Route::resource('products', 'Products\ProductController');
 // Address
 Route::resource('addresses', 'Addresses\AddressController');
 
+// Countries
+Route::resource('countries', 'Countries\CountryController');
+
 // User Registration
 Route::group(['prefix' => 'auth'], function() {
     Route::post('register', 'Auth\RegisterController@action');

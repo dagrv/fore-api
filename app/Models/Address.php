@@ -21,6 +21,7 @@ class Address extends Model {
 
     public static function boot() {
         parent::boot();
+        
         static::creating(function($address) {
             if ($address->default) {
                 $address->user->addresses()->update([
